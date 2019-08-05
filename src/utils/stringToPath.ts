@@ -32,15 +32,18 @@ const stringToPath = memoizeCapped(string => {
   if (string.charCodeAt(0) === charCodeOfDot) {
     result.push('')
   }
-  string.replace(rePropName, (match, expression, quote, subString) => {
-    let key = match
-    if (quote) {
-      key = subString.replace(reEscapeChar, '$1')
-    } else if (expression) {
-      key = expression.trim()
+  string.replace(
+    rePropName,
+    (match: string, expression: string, quote: any, subString: string) => {
+      let key = match
+      if (quote) {
+        key = subString.replace(reEscapeChar, '$1')
+      } else if (expression) {
+        key = expression.trim()
+      }
+      result.push(key)
     }
-    result.push(key)
-  })
+  )
   return result
 })
 

@@ -1,8 +1,9 @@
 {
   "name": "redux-control",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "build": "rimraf lib/* && tsc",
     "test": "jest test --coverage",
@@ -36,8 +37,11 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.16",
+    "@types/lodash.eq": "^4.0.6",
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.isobject": "^3.0.6",
+    "@types/lodash.issymbol": "^4.0.6",
+    "@types/lodash.memoize": "^4.1.6",
     "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^13.0.1",

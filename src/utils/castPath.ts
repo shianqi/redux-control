@@ -1,4 +1,4 @@
-import isKey from './isKey.js'
+import isKey from './isKey'
 import stringToPath from './stringToPath.js'
 
 /**
@@ -9,7 +9,7 @@ import stringToPath from './stringToPath.js'
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-function castPath (value, object) {
+function castPath (value: any, object: Object): any {
   if (Array.isArray(value)) {
     return value
   }

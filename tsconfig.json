@@ -2,11 +2,11 @@
   "compilerOptions": {
     "outDir": "./lib",
     "noImplicitAny": true,
-    "allowJs": true,
     "target": "es5",
     "jsx": "react",
     "lib": ["es2015"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true
   },
   "include": ["./src/**/*"]
 }
