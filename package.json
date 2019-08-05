@@ -1,0 +1,67 @@
+{
+  "name": "redux-control",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "rimraf lib/* && tsc",
+    "test": "jest test --coverage",
+    "tag": "git tag v$npm_package_version && git push origin --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shianqi/redux-control.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shianqi/redux-control/issues"
+  },
+  "importSort": {
+    ".js, .jsx, .es6, .es": {
+      "parser": "babylon",
+      "style": "module-scoped",
+      "options": {}
+    },
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "module-scoped",
+      "options": {}
+    }
+  },
+  "homepage": "https://github.com/shianqi/redux-control#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.16",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.isobject": "^3.0.6",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-class-property": "^1.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.8.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.5.3"
+  },
+  "peerDependencies": {
+    "redux": "^7.1.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "dependencies": {
+    "lodash.eq": "^4.0.0",
+    "lodash.get": "^4.4.2",
+    "lodash.isobject": "^3.0.2",
+    "lodash.issymbol": "^4.0.1",
+    "lodash.memoize": "^4.1.2",
+    "redux-batched-actions": "^0.4.1"
+  }
+}
