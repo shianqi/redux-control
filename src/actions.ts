@@ -20,6 +20,16 @@ type Many<T> = T | ReadonlyArray<T>
 type PropertyName = string | number | symbol
 type PropertyPath = Many<PropertyName>
 
+type SingleArgsType = [ PropertyPath, any ]
+interface MultiArgsTypeItem {
+  path: PropertyPath,
+  data: any
+}
+
+type MultiArgsType = [MultiArgsTypeItem[]]
+
+type SetArgsTypes = SingleArgsType | MultiArgsType
+
 export interface SetDataPayload {
   path: string[]
   data: any
@@ -30,17 +40,31 @@ const setData: (option: SetDataPayload) => Action = option => ({
   payload: option
 })
 
-// TODO: 添加部分数组快速操作语法糖
-export const set: (
-  path: PropertyPath,
-  data: any
-) => ThunkAction<void, any, void, any> = (path, data) => (
+export const set: (...args: SetArgsTypes) => ThunkAction<void, any, void, any> = (...args) => (
   dispatch,
   getState
 ) => {
-  const state = getState()
-  const arrayPath = castPath(path, state)
-  dispatch(setData({ path: arrayPath, data }))
+  const [ arg1 ] = args
+  if (Array.isArray(arg1) && arg1.length > 0 && typeof arg1[0] === 'object') {
+    const arrayPathArgs = (args as MultiArgsType)[0].map((item) => {
+      const { path, data } = item
+      const state = getState()
+      const arrayPath = castPath(path, state)
+
+      return {
+        path: arrayPath,
+        data
+      }
+    })
+    dispatch(
+      batchActions(arrayPathArgs.map(setData), `SET_MULTI_DATAS_@${arrayPathArgs.length}`)
+    )
+  } else {
+    const [path, data] = args as SingleArgsType
+    const state = getState()
+    const arrayPath = castPath(path, state)
+    dispatch(setData({ path: arrayPath, data }))
+  }
 }
 
 interface LoadingStateTypes {
