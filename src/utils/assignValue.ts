@@ -1,6 +1,6 @@
 import eq from 'lodash.eq'
 
-import baseAssignValue from './baseAssignValue.js'
+import baseAssignValue from './baseAssignValue'
 
 /** Used to check objects for own properties. */
 const hasOwnProperty = Object.prototype.hasOwnProperty
