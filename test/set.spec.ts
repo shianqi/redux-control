@@ -6,10 +6,20 @@ import { set, useReduxSetter } from '../src'
 test('test set object value', () => {
   const initState = { level1: { level2: { name: '?' } } }
   function counter (state = initState, action) {
-    switch (action.type) {
-      default:
-        return state
-    }
+    return state
+  }
+  const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+  store.subscribe(() => {
+    expect(store.getState()).toEqual({ level1: { level2: { name: 'Bob' } } })
+  })
+
+  const dispatch = store.dispatch as ThunkDispatch<any, void, any>
+  dispatch(set('level1.level2.name', 'Bob'))
+})
+
+test('test set object value with empty initState', () => {
+  function counter (state = {}, action) {
+    return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
   store.subscribe(() => {
@@ -23,10 +33,7 @@ test('test set object value', () => {
 test('test set object value by array path', () => {
   const initState = { level1: { level2: { name: ['Tom', 'Bob'] } } }
   function counter (state = initState, action) {
-    switch (action.type) {
-      default:
-        return state
-    }
+    return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
   store.subscribe(() => {
@@ -34,7 +41,6 @@ test('test set object value by array path', () => {
       level1: { level2: { name: ['Tom', 'Jack'] } }
     })
   })
-
   const dispatch = store.dispatch as ThunkDispatch<any, void, any>
   dispatch(set(['level1', 'level2', 'name', 1], 'Jack'))
 })
@@ -42,16 +48,12 @@ test('test set object value by array path', () => {
 test('test set not exist value', () => {
   const initState = { level1: {} }
   function counter (state = initState, action) {
-    switch (action.type) {
-      default:
-        return state
-    }
+    return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
   store.subscribe(() => {
     expect(store.getState()).toEqual({ level1: { level2: { name: 'Bob' } } })
   })
-
   const dispatch = store.dispatch as ThunkDispatch<any, void, any>
   dispatch(set('level1.level2.name', 'Bob'))
 })
@@ -59,10 +61,7 @@ test('test set not exist value', () => {
 test('test set array value', () => {
   const initState = { level1: { level2: { name: ['Tom', 'Bob'] } } }
   function counter (state = initState, action) {
-    switch (action.type) {
-      default:
-        return state
-    }
+    return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
   const data1 = store.getState()

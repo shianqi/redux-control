@@ -1,0 +1,117 @@
+# redux-control
+
+[![npm](https://img.shields.io/npm/v/redux-control.svg)](https://www.npmjs.com/package/redux-control)
+[![redux-control](https://img.shields.io/npm/dm/redux-control.svg)](https://www.npmjs.com/package/redux-control)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/shianqi/redux-control/master/LICENSE)
+
+A modern Redux utility library delivering quick operation, loading data, & extras.
+
+## Installation
+
+Using npm:
+
+```bash
+$ npm i --save redux-control
+```
+
+## Documents
+
+- [set](#set)
+- [tryToFetch](#tryToFetch)
+
+### set
+
+#### Arguments
+
+```text
+[path: array | string, data: any] | [{ path: array | string, data: any }[]]
+```
+
+#### Returns
+
+void
+
+#### Example
+
+```javascript
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import { set, useReduxSetter } from "redux-control";
+
+function reducer(state = {}, action) {
+  return state;
+}
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
+
+store.subscribe(() => {
+  console.log(store.getState());
+  // { level1: { level2: { name: "Bob" } } }
+});
+
+store.dispatch(set("level1.level2.name", "Bob"));
+```
+
+### tryToFetch
+
+#### Arguments
+
+```text
+{
+  path: string[]               // The path where the return value is stored
+  fetchFunc: () => void        // Function of loading data
+  formate: (data: any) => any  // Function of formatting the returned data
+  ttl: number                  // Valid time of the data
+  loadingSuffix: string        // Store the suffix of the load information key
+}
+```
+
+#### Returns
+
+`Promise<any>` The return value of an asynchronous request
+
+#### Example
+
+```javascript
+import { applyMiddleware, createStore } from "redux";
+import { tryToFetch, useReduxSetter } from "redux-control";
+import thunk from "redux-thunk";
+
+function reducer(state = {}, action) {
+  return state;
+}
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
+
+store.subscribe(() => {
+  console.log(store.getState());
+  // { level1:
+  //   { level2_Loading: { loading: true, loadingTime: 1565193263003 } } }
+  // After ~1000m
+  // { level1:
+  //   {
+  //     level2_Loading:
+  //       { loading: false,
+  //         loadingTime: 1565193263003,
+  //         updateTime: 1565193264020 },
+  //     level2: { name: 'redux' } } }
+});
+
+const getDate = () =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ name: "redux" });
+    }, 1000);
+  });
+
+const fetch = async () => {
+  await store.dispatch(
+    tryToFetch({
+      path: "level1.level2",
+      fetchFunc: getDate,
+      ttl: 1000,
+    }),
+  );
+};
+
+fetch();
+```
