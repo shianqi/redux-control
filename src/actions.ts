@@ -3,7 +3,10 @@ import { Action } from 'redux'
 import { batchActions } from 'redux-batched-actions'
 import { ThunkAction } from 'redux-thunk'
 
+import tryToDispatch from './tryToDispatch'
 import castPath from './utils/castPath'
+
+// TODO: 拆分文件
 
 export interface FetchDatePayload {
   location: string
@@ -42,32 +45,33 @@ const setData: (option: SetDataPayload) => Action = option => ({
 
 export const set: (
   ...args: SetArgsTypes
-) => ThunkAction<void, any, void, any> = (...args) => (dispatch, getState) => {
-  const [arg1] = args
-  if (Array.isArray(arg1) && arg1.length > 0 && typeof arg1[0] === 'object') {
-    const arrayPathArgs = (args as MultiArgsType)[0].map(item => {
-      const { path, data } = item
+) => ThunkAction<void, any, void, any> = (...args) =>
+  tryToDispatch((dispatch, getState) => {
+    const [arg1] = args
+    if (Array.isArray(arg1) && arg1.length > 0 && typeof arg1[0] === 'object') {
+      const arrayPathArgs = (args as MultiArgsType)[0].map(item => {
+        const { path, data } = item
+        const state = getState()
+        const arrayPath = castPath(path, state)
+
+        return {
+          path: arrayPath,
+          data
+        }
+      })
+      dispatch(
+        batchActions(
+          arrayPathArgs.map(setData),
+          `SET_MULTI_DATAS_@${arrayPathArgs.length}`
+        )
+      )
+    } else {
+      const [path, data] = args as SingleArgsType
       const state = getState()
       const arrayPath = castPath(path, state)
-
-      return {
-        path: arrayPath,
-        data
-      }
-    })
-    dispatch(
-      batchActions(
-        arrayPathArgs.map(setData),
-        `SET_MULTI_DATAS_@${arrayPathArgs.length}`
-      )
-    )
-  } else {
-    const [path, data] = args as SingleArgsType
-    const state = getState()
-    const arrayPath = castPath(path, state)
-    dispatch(setData({ path: arrayPath, data }))
-  }
-}
+      dispatch(setData({ path: arrayPath, data }))
+    }
+  })
 
 interface LoadingStateTypes {
   loading?: boolean

@@ -1,4 +1,4 @@
-import { Reducer, compose } from 'redux'
+import { Reducer, Store, compose } from 'redux'
 import { enableBatching } from 'redux-batched-actions'
 
 import reduxSetterReducer from './reducers'
@@ -12,3 +12,35 @@ export const useReduxSetter = (rootReducer: Reducer) =>
       rootReducer
     )(state, action)
   )
+
+let __REDUX_CONTROL_STORE__: Store | null = null
+
+export const autoDispatch = (store: Store) => {
+  __REDUX_CONTROL_STORE__ = store
+  return store
+}
+
+export const isAutoDispatch = () => {
+  if (__REDUX_CONTROL_STORE__) {
+    return true
+  }
+  return false
+}
+
+export const cancelAutoDispatch = () => {
+  __REDUX_CONTROL_STORE__ = null
+}
+
+export const getStore: () => Store = () => {
+  if (!__REDUX_CONTROL_STORE__) {
+    throw new Error(
+      `Before using 'getStore', you need to call 'autoDispatch' after 'createStore'!`
+    )
+  }
+  return __REDUX_CONTROL_STORE__
+}
+
+export const dispatch = (action: any) => {
+  const { dispatch: _dispatch } = getStore()
+  _dispatch(action)
+}

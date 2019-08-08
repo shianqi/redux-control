@@ -5,7 +5,7 @@ import { set, useReduxSetter } from '../src'
 
 test('test set object value', () => {
   const initState = { level1: { level2: { name: '?' } } }
-  function counter (state = initState, action) {
+  function counter(state = initState, action) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -18,7 +18,7 @@ test('test set object value', () => {
 })
 
 test('test set object value with empty initState', () => {
-  function counter (state = {}, action) {
+  function counter(state = {}, action) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -32,7 +32,7 @@ test('test set object value with empty initState', () => {
 
 test('test set object value by array path', () => {
   const initState = { level1: { level2: { name: ['Tom', 'Bob'] } } }
-  function counter (state = initState, action) {
+  function counter(state = initState, action) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -47,7 +47,7 @@ test('test set object value by array path', () => {
 
 test('test set not exist value', () => {
   const initState = { level1: {} }
-  function counter (state = initState, action) {
+  function counter(state = initState, action) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -60,7 +60,7 @@ test('test set not exist value', () => {
 
 test('test set array value', () => {
   const initState = { level1: { level2: { name: ['Tom', 'Bob'] } } }
-  function counter (state = initState, action) {
+  function counter(state = initState, action) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
