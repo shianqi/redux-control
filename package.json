@@ -1,7 +1,7 @@
 {
   "name": "redux-control",
   "version": "0.1.0",
-  "description": "",
+  "description": "A modern Redux utility library delivering quick operation, loading data, & extras.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/shianqi/redux-control/issues"
   },
@@ -43,7 +43,7 @@
     "@types/lodash.issymbol": "^4.0.6",
     "@types/lodash.memoize": "^4.1.6",
     "babel-eslint": "^10.0.2",
-    "eslint": "^5.16.0",
+    "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-class-property": "^1.1.0",
     "eslint-plugin-import": "^2.18.2",

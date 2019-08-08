@@ -20,9 +20,9 @@ type Many<T> = T | ReadonlyArray<T>
 type PropertyName = string | number | symbol
 type PropertyPath = Many<PropertyName>
 
-type SingleArgsType = [ PropertyPath, any ]
+type SingleArgsType = [PropertyPath, any]
 interface MultiArgsTypeItem {
-  path: PropertyPath,
+  path: PropertyPath
   data: any
 }
 
@@ -40,13 +40,12 @@ const setData: (option: SetDataPayload) => Action = option => ({
   payload: option
 })
 
-export const set: (...args: SetArgsTypes) => ThunkAction<void, any, void, any> = (...args) => (
-  dispatch,
-  getState
-) => {
-  const [ arg1 ] = args
+export const set: (
+  ...args: SetArgsTypes
+) => ThunkAction<void, any, void, any> = (...args) => (dispatch, getState) => {
+  const [arg1] = args
   if (Array.isArray(arg1) && arg1.length > 0 && typeof arg1[0] === 'object') {
-    const arrayPathArgs = (args as MultiArgsType)[0].map((item) => {
+    const arrayPathArgs = (args as MultiArgsType)[0].map(item => {
       const { path, data } = item
       const state = getState()
       const arrayPath = castPath(path, state)
@@ -57,7 +56,10 @@ export const set: (...args: SetArgsTypes) => ThunkAction<void, any, void, any> =
       }
     })
     dispatch(
-      batchActions(arrayPathArgs.map(setData), `SET_MULTI_DATAS_@${arrayPathArgs.length}`)
+      batchActions(
+        arrayPathArgs.map(setData),
+        `SET_MULTI_DATAS_@${arrayPathArgs.length}`
+      )
     )
   } else {
     const [path, data] = args as SingleArgsType

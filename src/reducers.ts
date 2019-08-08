@@ -8,7 +8,7 @@ import toKey from './utils/toKey'
 
 const initialState = {} as any
 
-function handleSetActions<RootStateTypes> (
+function handleSetActions<RootStateTypes>(
   state: RootStateTypes,
   action: { payload: SetDataPayload }
 ) {
@@ -30,8 +30,8 @@ function handleSetActions<RootStateTypes> (
       newValue = isObject(objValue)
         ? objValue
         : isIndex(path[index + 1])
-          ? []
-          : {}
+        ? []
+        : {}
       if (Array.isArray(objValue)) {
         newValue = [...newValue]
       } else {
