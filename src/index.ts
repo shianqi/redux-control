@@ -2,8 +2,9 @@ import { Reducer, Store, compose } from 'redux'
 import { enableBatching } from 'redux-batched-actions'
 
 import reduxSetterReducer from './reducers'
-
-export { tryToFetch, set } from './actions'
+export { default as set } from './set'
+export { default as get } from './get'
+export * from './tryToFetch'
 
 export const useReduxSetter = (rootReducer: Reducer) =>
   enableBatching((state: any, action: any) =>
@@ -42,5 +43,5 @@ export const getStore: () => Store = () => {
 
 export const dispatch = (action: any) => {
   const { dispatch: _dispatch } = getStore()
-  _dispatch(action)
+  return _dispatch(action)
 }

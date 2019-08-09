@@ -20,6 +20,8 @@ $ npm i --save redux-control
 - [set](#set)
 - [tryToFetch](#tryToFetch)
 
+---
+
 ### set
 
 #### Arguments
@@ -51,6 +53,40 @@ store.subscribe(() => {
 
 store.dispatch(set("level1.level2.name", "Bob"));
 ```
+
+---
+
+### get
+
+#### Arguments
+
+```text
+path: array | string
+```
+
+#### Returns
+
+any
+
+#### Example
+
+```javascript
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import { get, useReduxSetter } from "redux-control";
+
+const initState = { level1: { level2: { name: "Bob" } } };
+function counter(state = initState, action) {
+  return state;
+}
+const store = createStore(useReduxSetter(counter), applyMiddleware(thunk));
+
+const name = store.dispatch(get("level1.level2.name"));
+console.log(name);
+// 'Bob'
+```
+
+---
 
 ### tryToFetch
 
@@ -114,4 +150,38 @@ const fetch = async () => {
 };
 
 fetch();
+```
+
+---
+
+### autoDispatch / cancelAutoDispatch
+
+#### Arguments
+
+store: redux.Store
+
+#### Returns
+
+store: redux.Store
+
+#### Example
+
+```javascript
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import { set, useReduxSetter, autoDispatch } from "redux-control";
+
+function reducer(state = {}, action) {
+  return state;
+}
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
+autoDispatch(store);
+
+store.subscribe(() => {
+  console.log(store.getState());
+  // { level1: { level2: { name: "Bob" } } }
+});
+
+set("level1.level2.name", "Bob");
+cancelAutoDispatch();
 ```

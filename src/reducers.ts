@@ -1,14 +1,14 @@
 import isObject from 'lodash.isobject'
 import { Reducer } from 'redux'
 
-import { SetDataPayload } from './actions'
+import { SetDataPayload } from './set'
 import assignValue from './utils/assignValue'
 import isIndex from './utils/isIndex'
 import toKey from './utils/toKey'
 
 const initialState = {} as any
 
-function handleSetActions<RootStateTypes>(
+function handleSetActions<RootStateTypes> (
   state: RootStateTypes,
   action: { payload: SetDataPayload }
 ) {
@@ -30,8 +30,8 @@ function handleSetActions<RootStateTypes>(
       newValue = isObject(objValue)
         ? objValue
         : isIndex(path[index + 1])
-        ? []
-        : {}
+          ? []
+          : {}
       if (Array.isArray(objValue)) {
         newValue = [...newValue]
       } else {
