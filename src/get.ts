@@ -8,9 +8,7 @@ import castPath from './utils/castPath'
 type SingleArgsType = [PropertyPath]
 type GetArgsType = SingleArgsType
 
-const get: (...args: GetArgsType) => ThunkAction<void, any, void, any> = (
-  ...args
-) =>
+const get: (...args: GetArgsType) => any = (...args) =>
   tryToDispatch((dispatch, getState) => {
     const [path] = args
     const state = getState()

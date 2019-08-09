@@ -82,7 +82,7 @@ const shouldFetch = (state: any, options: FormatedOptinoTypes) => {
 
 export const tryToFetch: (
   tryToFetchOption: TryToFetchOptionTypes
-) => ThunkAction<any, any, void, any> = tryToFetchOption =>
+) => any = tryToFetchOption =>
   tryToDispatch(async (dispatch, getState) => {
     const state = getState()
     const options = getDefaultOption(tryToFetchOption, state)

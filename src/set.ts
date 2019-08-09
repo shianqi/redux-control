@@ -28,9 +28,7 @@ const setData: (option: SetDataPayload) => Action = option => ({
   payload: option
 })
 
-const set: (...args: SetArgsType) => ThunkAction<void, any, void, any> = (
-  ...args
-) =>
+const set: (...args: SetArgsType) => any = (...args) =>
   tryToDispatch((dispatch, getState) => {
     const [arg1] = args
     if (Array.isArray(arg1) && arg1.length > 0 && typeof arg1[0] === 'object') {
