@@ -4,6 +4,7 @@ import set from './set'
 import tryToDispatch from './tryToDispatch'
 import { PropertyPath } from './types'
 import castPath from './utils/castPath'
+import { isAutoDispatch } from './index'
 
 interface TryToFetchOptionTypes {
   path: PropertyPath
@@ -93,32 +94,31 @@ export const tryToFetch: (
 
     const loadingPath = getLoadingPath(path, loadingSuffix)
 
-    dispatch(
-      set(loadingPath, {
-        loading: true,
-        loadingTime: new Date().valueOf()
-      })
-    )
+    const setLoadingTimeAction = set(loadingPath, {
+      loading: true,
+      loadingTime: new Date().valueOf()
+    })
+    !isAutoDispatch() && dispatch(setLoadingTimeAction)
+
     const res = await fetchFunc()
     const formateData = formate(res)
     const loadingState = get(getState(), loadingPath)
 
-    dispatch(
-      set([
-        {
-          path,
-          data: formateData
-        },
-        {
-          path: loadingPath,
-          data: {
-            ...loadingState,
-            loading: false,
-            updateTime: new Date().valueOf()
-          }
+    const setUpdateTimeAction = set([
+      {
+        path,
+        data: formateData
+      },
+      {
+        path: loadingPath,
+        data: {
+          ...loadingState,
+          loading: false,
+          updateTime: new Date().valueOf()
         }
-      ])
-    )
+      }
+    ])
+    !isAutoDispatch() && dispatch(setUpdateTimeAction)
 
     return formateData
   })

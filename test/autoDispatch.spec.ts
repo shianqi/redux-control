@@ -40,19 +40,21 @@ test('test autoDispatch', () => {
 })
 
 test(`test dispatch autoDispatch actions`, () => {
-  const initState = { level1: { level2: { name: '?' } } }
-  function counter (state = initState) {
-    return state
+  const start = () => {
+    const initState = { level1: { level2: { name: '?' } } }
+    function counter (state = initState) {
+      return state
+    }
+    const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+    autoDispatch(store)
+
+    dispatch(set('level1.level2.name', 'Bob'))
+    cancelAutoDispatch()
   }
-  const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
-  autoDispatch(store)
 
-  getStore().subscribe(() => {
-    expect(store.getState()).toEqual({ level1: { level2: { name: 'Bob' } } })
-  })
-
-  dispatch(set('level1.level2.name', 'Bob'))
-  cancelAutoDispatch()
+  expect(start).toThrowError(
+    'Actions must be plain objects. Use custom middleware for async actions.'
+  )
 })
 
 test('test autoDispatch tryToFetch', async () => {
