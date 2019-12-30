@@ -1,5 +1,5 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es6: true,
@@ -8,7 +8,8 @@ module.exports = {
   extends: ['standard'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
+    AMap: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
@@ -17,5 +18,8 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  plugins: ['standard']
+  plugins: ['@typescript-eslint', 'babel', 'standard'],
+  rules: {
+    '@typescript-eslint/no-unused-vars': 2
+  }
 }

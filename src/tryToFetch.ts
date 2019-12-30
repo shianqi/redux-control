@@ -1,5 +1,4 @@
 import get from 'lodash.get'
-import { ThunkAction } from 'redux-thunk'
 
 import set from './set'
 import tryToDispatch from './tryToDispatch'
