@@ -21,9 +21,9 @@ interface FormatedOptinoTypes {
   loadingSuffix: string
 }
 
-interface LoadingStateTypes {
-  loading?: boolean
-  loadingTime?: number
+export interface LoadingStateTypes {
+  loading: boolean
+  loadingTime: number
   updateTime?: number
 }
 
