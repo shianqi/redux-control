@@ -1,6 +1,6 @@
 {
   "name": "redux-control",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A modern Redux utility library delivering quick operation, loading data, & extras.",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",

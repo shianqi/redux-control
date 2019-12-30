@@ -39,12 +39,12 @@ void
 ```javascript
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { set, useReduxSetter } from 'redux-control'
+import useReduxControl, { set } from 'redux-control'
 
 function reducer(state = {}, action) {
   return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
+const store = createStore(useReduxControl(reducer), applyMiddleware(thunk))
 
 store.subscribe(() => {
   console.log(store.getState())
@@ -73,13 +73,13 @@ any
 ```javascript
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { get, useReduxSetter } from 'redux-control'
+import useReduxControl, { get } from 'redux-control'
 
 const initState = { level1: { level2: { name: 'Bob' } } }
 function counter(state = initState, action) {
   return state
 }
-const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
 
 const name = store.dispatch(get('level1.level2.name'))
 console.log(name)
@@ -110,13 +110,13 @@ console.log(name)
 
 ```javascript
 import { applyMiddleware, createStore } from 'redux'
-import { tryToFetch, useReduxSetter } from 'redux-control'
+import useReduxControl, { tryToFetch } from 'redux-control'
 import thunk from 'redux-thunk'
 
 function reducer(state = {}, action) {
   return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
+const store = createStore(useReduxControl(reducer), applyMiddleware(thunk))
 
 store.subscribe(() => {
   console.log(store.getState())
@@ -169,12 +169,12 @@ store: redux.Store
 ```javascript
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { set, useReduxSetter, autoDispatch } from 'redux-control'
+import useReduxControl, { set, autoDispatch } from 'redux-control'
 
 function reducer(state = {}, action) {
   return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
+const store = createStore(useReduxControl(reducer), applyMiddleware(thunk))
 autoDispatch(store)
 
 store.subscribe(() => {
