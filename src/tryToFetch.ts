@@ -42,7 +42,7 @@ const getDefaultOption: (
     fetchFunc,
     formate = (data: any) => data,
     ttl = 0,
-    loadingSuffix = '_Loading'
+    loadingSuffix = 'Loading'
   } = options
 
   const arrayPath = castPath(path, state)

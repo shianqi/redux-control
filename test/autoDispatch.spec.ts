@@ -87,8 +87,8 @@ test('test autoDispatch tryToFetch', async () => {
   await tryToFetchData()
   const data2 = store.getState()
   expect(data2.level1.level2.name).toEqual('redux')
-  expect(data1.level1.level2_Loading.updateTime).toEqual(
-    data2.level1.level2_Loading.updateTime
+  expect(data1.level1.level2Loading.updateTime).toEqual(
+    data2.level1.level2Loading.updateTime
   )
 
   expect(data1 === data2).toEqual(true)
