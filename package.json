@@ -3,9 +3,10 @@
   "version": "0.3.1",
   "description": "A modern Redux utility library delivering quick operation, loading data, & extras.",
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "rimraf lib/* && tsc",
+    "build-watch": "rimraf lib/* && tsc --watch",
     "test": "jest test --coverage",
     "tag": "git tag v$npm_package_version && git push origin --tags"
   },
