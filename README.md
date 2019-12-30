@@ -37,21 +37,21 @@ void
 #### Example
 
 ```javascript
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import { set, useReduxSetter } from "redux-control";
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { set, useReduxSetter } from 'redux-control'
 
 function reducer(state = {}, action) {
-  return state;
+  return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log(store.getState())
   // { level1: { level2: { name: "Bob" } } }
-});
+})
 
-store.dispatch(set("level1.level2.name", "Bob"));
+store.dispatch(set('level1.level2.name', 'Bob'))
 ```
 
 ---
@@ -71,18 +71,18 @@ any
 #### Example
 
 ```javascript
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import { get, useReduxSetter } from "redux-control";
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { get, useReduxSetter } from 'redux-control'
 
-const initState = { level1: { level2: { name: "Bob" } } };
+const initState = { level1: { level2: { name: 'Bob' } } }
 function counter(state = initState, action) {
-  return state;
+  return state
 }
-const store = createStore(useReduxSetter(counter), applyMiddleware(thunk));
+const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
 
-const name = store.dispatch(get("level1.level2.name"));
-console.log(name);
+const name = store.dispatch(get('level1.level2.name'))
+console.log(name)
 // 'Bob'
 ```
 
@@ -109,47 +109,47 @@ console.log(name);
 #### Example
 
 ```javascript
-import { applyMiddleware, createStore } from "redux";
-import { tryToFetch, useReduxSetter } from "redux-control";
-import thunk from "redux-thunk";
+import { applyMiddleware, createStore } from 'redux'
+import { tryToFetch, useReduxSetter } from 'redux-control'
+import thunk from 'redux-thunk'
 
 function reducer(state = {}, action) {
-  return state;
+  return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log(store.getState())
   // { level1:
-  //   { level2_Loading: { loading: true, loadingTime: 1565193263003 } } }
+  //   { level2Loading: { loading: true, loadingTime: 1565193263003 } } }
   // After ~1000m
   // { level1:
   //   {
-  //     level2_Loading:
+  //     level2Loading:
   //       { loading: false,
   //         loadingTime: 1565193263003,
   //         updateTime: 1565193264020 },
   //     level2: { name: 'redux' } } }
-});
+})
 
 const getDate = () =>
   new Promise(resolve => {
     setTimeout(() => {
-      resolve({ name: "redux" });
-    }, 1000);
-  });
+      resolve({ name: 'redux' })
+    }, 1000)
+  })
 
 const fetch = async () => {
   await store.dispatch(
     tryToFetch({
-      path: "level1.level2",
+      path: 'level1.level2',
       fetchFunc: getDate,
-      ttl: 1000,
-    }),
-  );
-};
+      ttl: 1000
+    })
+  )
+}
 
-fetch();
+fetch()
 ```
 
 ---
@@ -167,21 +167,21 @@ store: redux.Store
 #### Example
 
 ```javascript
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import { set, useReduxSetter, autoDispatch } from "redux-control";
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { set, useReduxSetter, autoDispatch } from 'redux-control'
 
 function reducer(state = {}, action) {
-  return state;
+  return state
 }
-const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk));
-autoDispatch(store);
+const store = createStore(useReduxSetter(reducer), applyMiddleware(thunk))
+autoDispatch(store)
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log(store.getState())
   // { level1: { level2: { name: "Bob" } } }
-});
+})
 
-set("level1.level2.name", "Bob");
-cancelAutoDispatch();
+set('level1.level2.name', 'Bob')
+cancelAutoDispatch()
 ```

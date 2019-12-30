@@ -1,6 +1,5 @@
 import { Action } from 'redux'
 import { batchActions } from 'redux-batched-actions'
-import { ThunkAction } from 'redux-thunk'
 
 import tryToDispatch from './tryToDispatch'
 import { PropertyPath } from './types'

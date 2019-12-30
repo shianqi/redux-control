@@ -8,10 +8,10 @@ export * from './tryToFetch'
 
 export const useReduxSetter = (rootReducer: Reducer) =>
   enableBatching((state: any, action: any) =>
-    compose(
-      inState => reduxSetterReducer(inState, action),
-      rootReducer
-    )(state, action)
+    compose(inState => reduxSetterReducer(inState, action), rootReducer)(
+      state,
+      action
+    )
   )
 
 let __REDUX_CONTROL_STORE__: Store | null = null

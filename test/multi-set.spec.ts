@@ -5,7 +5,7 @@ import { set, useReduxSetter } from '../src'
 
 test('test set object value', () => {
   const initState = { level1: { level2: { name: '?' } } }
-  function counter(state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))

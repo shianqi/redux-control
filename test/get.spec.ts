@@ -5,7 +5,7 @@ import { get, useReduxSetter, autoDispatch, cancelAutoDispatch } from '../src'
 
 test('test set object value', () => {
   const initState = { level1: { level2: { name: 'Bob' } } }
-  function counter (state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -16,7 +16,7 @@ test('test set object value', () => {
 
 test('test set object value', () => {
   const initState = { level1: { level2: { name: 'Bob' } } }
-  function counter (state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))

@@ -5,7 +5,7 @@ import { tryToFetch, useReduxSetter } from '../src'
 
 test('test tryToFetch action', async () => {
   const initState = { level1: { level2: null } }
-  function counter(state = initState, action) {
+  function counter (state = initState, action) {
     switch (action.type) {
       default:
         return state

@@ -13,7 +13,7 @@ import {
 
 test('test autoDispatch', () => {
   const initState = { level1: { level2: { name: '?' } } }
-  function counter (state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -29,7 +29,7 @@ test('test autoDispatch', () => {
 
 test('test autoDispatch', () => {
   const initState = { level1: { level2: { name: '?' } } }
-  function counter (state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   createStore(useReduxSetter(counter), applyMiddleware(thunk))
@@ -41,7 +41,7 @@ test('test autoDispatch', () => {
 
 test(`test dispatch autoDispatch actions`, () => {
   const initState = { level1: { level2: { name: '?' } } }
-  function counter (state = initState, action) {
+  function counter (state = initState) {
     return state
   }
   const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
