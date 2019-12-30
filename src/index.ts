@@ -1,4 +1,4 @@
-import { Reducer, Store, compose } from 'redux'
+import { Reducer, Store, compose, Action, AnyAction } from 'redux'
 import { enableBatching } from 'redux-batched-actions'
 
 import reduxSetterReducer from './reducers'
@@ -6,8 +6,10 @@ export { default as set } from './set'
 export { default as get } from './get'
 export * from './tryToFetch'
 
-export const useReduxSetter = (rootReducer: Reducer) =>
-  enableBatching((state: any, action: any) =>
+export const useReduxSetter: <S, A extends Action = AnyAction>(
+  rootReducer: Reducer<S, A>
+) => Reducer<S> = rootReducer =>
+  enableBatching((state, action: any) =>
     compose(inState => reduxSetterReducer(inState, action), rootReducer)(
       state,
       action
