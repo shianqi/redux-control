@@ -1,14 +1,14 @@
 import thunk from 'redux-thunk'
 import { applyMiddleware, createStore } from 'redux'
 
-import {
+import useReduxControl, {
   autoDispatch,
   cancelAutoDispatch,
   dispatch,
   getStore,
   set,
   tryToFetch,
-  useReduxSetter
+  LoadingStateTypes
 } from '../src'
 
 test('test autoDispatch', () => {
@@ -16,7 +16,7 @@ test('test autoDispatch', () => {
   function counter (state = initState) {
     return state
   }
-  const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+  const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
   autoDispatch(store)
 
   getStore().subscribe(() => {
@@ -32,7 +32,7 @@ test('test autoDispatch', () => {
   function counter (state = initState) {
     return state
   }
-  createStore(useReduxSetter(counter), applyMiddleware(thunk))
+  createStore(useReduxControl(counter), applyMiddleware(thunk))
 
   expect(() => dispatch(set('level1.level2.name', 'Bob'))).toThrowError(
     `Before using 'getStore', you need to call 'autoDispatch' after 'createStore'!`
@@ -45,7 +45,7 @@ test(`test dispatch autoDispatch actions`, () => {
     function counter (state = initState) {
       return state
     }
-    const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+    const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
     autoDispatch(store)
 
     dispatch(set('level1.level2.name', 'Bob'))
@@ -58,14 +58,21 @@ test(`test dispatch autoDispatch actions`, () => {
 })
 
 test('test autoDispatch tryToFetch', async () => {
-  const initState = { level1: { level2: null } }
+  interface T3StateTypes {
+    level1: {
+      level2: { name: string }
+      level2Loading?: LoadingStateTypes
+    }
+  }
+
+  const initState: T3StateTypes = { level1: { level2: null } }
   function counter (state = initState, action) {
     switch (action.type) {
       default:
         return state
     }
   }
-  const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+  const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
   autoDispatch(store)
 
   const getDate = () =>

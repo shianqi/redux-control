@@ -1,17 +1,26 @@
 import { applyMiddleware, createStore } from 'redux'
 import thunk, { ThunkDispatch } from 'redux-thunk'
 
-import { tryToFetch, useReduxSetter } from '../src'
+import useReduxControl, { tryToFetch, LoadingStateTypes } from '../src'
 
 test('test tryToFetch action', async () => {
-  const initState = { level1: { level2: null } }
+  interface T1RootState {
+    level1: {
+      level2: {
+        name: string
+      }
+      level2Loading?: LoadingStateTypes
+    }
+  }
+
+  const initState: T1RootState = { level1: { level2: null } }
   function counter (state = initState, action) {
     switch (action.type) {
       default:
         return state
     }
   }
-  const store = createStore(useReduxSetter(counter), applyMiddleware(thunk))
+  const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
 
   const dispatch = store.dispatch as ThunkDispatch<any, void, any>
 

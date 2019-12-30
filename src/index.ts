@@ -6,7 +6,7 @@ export { default as set } from './set'
 export { default as get } from './get'
 export * from './tryToFetch'
 
-export const useReduxSetter: <S, A extends Action = AnyAction>(
+const useReduxControl: <S, A extends Action = AnyAction>(
   rootReducer: Reducer<S, A>
 ) => Reducer<S> = rootReducer =>
   enableBatching((state, action: any) =>
@@ -47,3 +47,5 @@ export const dispatch = (action: any) => {
   const { dispatch: _dispatch } = getStore()
   return _dispatch(action)
 }
+
+export default useReduxControl
