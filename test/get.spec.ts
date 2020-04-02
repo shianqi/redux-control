@@ -25,3 +25,15 @@ test('test set object value', () => {
   expect(get('level1.level2.name')).toEqual('Bob')
   cancelAutoDispatch()
 })
+
+test('get object value with default value', () => {
+  const initState = { level1: { level2: { name: 'Bob' } } }
+  function counter (state = initState) {
+    return state
+  }
+  const store = createStore(useReduxControl(counter), applyMiddleware(thunk))
+  autoDispatch(store)
+
+  expect(get('level1.level2.age', 0)).toEqual(0)
+  cancelAutoDispatch()
+})

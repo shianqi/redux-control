@@ -62,6 +62,7 @@ store.dispatch(set('level1.level2.name', 'Bob'))
 
 ```text
 path: array | string
+defaultValue?: any
 ```
 
 #### Returns
